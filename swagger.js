@@ -5,7 +5,7 @@ const doc = {
         title: 'My RouteDiscover API',
         description: 'API for getting, posting, updating and deleting trekking routes and descriptions about it.',
     },
-    host: 'localhost:3000',
+    host: 'routediscover.onrender.com',
     schemes: ['https'],
 };
 //routediscover.onrender.com
