@@ -20,6 +20,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 connectDB();
 
+
+// Configuración de Express Handlebars como el motor de vistas
+app.engine('hbs', exphbs.engine);
+app.set('view engine', 'hbs');
+
+
 const port = 3000;
 
 app.use(errorHandler);
