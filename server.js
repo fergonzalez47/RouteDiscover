@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const path = require('path');
+//const path = require('path');
 const express = require('express');
 const app = express();
 const { connectDB } = require('./db/dbconnection');
