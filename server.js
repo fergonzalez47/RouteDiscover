@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-//const path = require('path');
+const path = require('path');
 const express = require('express');
 const app = express();
 const { connectDB } = require('./db/dbconnection');
 
 const cors = require('cors');
-const exphbs = require('express-handlebars');
+const exphbs = require("express-handlebars").create({ defaultLayout: 'main', extname: '.hbs' });
 const passport = require("passport");
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
