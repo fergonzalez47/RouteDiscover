@@ -1,0 +1,20 @@
+{
+  "name": "Alto Heumul",
+  "difficulty": "Moderate",
+  "distance": 5,
+  "duration": 5,
+  "country": "Chile",
+  "description": "Trekking in Alto Heumul, Chile, offers an impressive experience in the middle of the wild nature of the region. Alto Heumul is a mountainous area located in southern Chile, known for its scenic beauty and challenging mountainous terrain.",
+  "pointsOfInterest": "Glacier viewpoint, alpine lakes, Andean fauna"
+} 
+
+
+{
+  "name": "Salto Angel Expedition",
+  "difficulty": "Challenging",
+  "distance": 60,
+  "duration": 5,
+  "country": "Venezuela",
+  "description": "The Salto Angel Expedition is a challenging trekking route located in the Canaima National Park in Venezuela. It takes you on an adventurous journey to Angel Falls, the highest waterfall in the world. The trek includes hiking through dense rainforests, crossing rivers, and camping in the wilderness.",
+  "pointsOfInterest": "Angel Falls, Auyán-Tepui, Canaima Lagoon, Kavac Cave"
+}

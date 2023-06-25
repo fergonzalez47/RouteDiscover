@@ -1,0 +1,386 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "My RouteDiscover API",
+    "description": "API for getting, posting, updating and deleting trekking routes and descriptions about it.",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/api-docs": {
+      "get": {
+        "summary": "Get Swagger documentation",
+        "description": "Retrieve the Swagger documentation for the API.",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/trails": {
+      "get": {
+        "summary": "Get all trekking routes",
+        "description": "Retrieve a list of all trekking trails.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new trail",
+        "description": "Create a new trekking trail.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "difficulty": {
+                  "example": "Hard, Moderate, Easy"
+                },
+                "distance": {
+                  "example": "any"
+                },
+                "duration": {
+                  "example": "any"
+                },
+                "country": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "pointsOfInterest": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/trails/{trailId}": {
+      "get": {
+        "summary": "Get a trail by ID",
+        "description": "Retrieve information about a specific trekking trail.",
+        "parameters": [
+          {
+            "name": "trailId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a trail",
+        "description": "Update information about a specific trekking trail.",
+        "parameters": [
+          {
+            "name": "trailId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "difficulty": {
+                  "example": "any"
+                },
+                "distance": {
+                  "example": "any"
+                },
+                "duration": {
+                  "example": "any"
+                },
+                "country": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
+                },
+                "pointsOfInterest": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a trail",
+        "description": "Delete a specific trekking trail.",
+        "parameters": [
+          {
+            "name": "trailId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/trails/difficulty/{difficulty}": {
+      "get": {
+        "summary": "Get trails by difficulty",
+        "description": "Retrieve a list of trekking trails based on the specified difficulty.",
+        "parameters": [
+          {
+            "name": "difficulty",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/trails/country/{country}": {
+      "get": {
+        "summary": "Get trails by country",
+        "description": "Retrieve a list of trekking trails based on the specified country.",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/trails/pointOfInterest/{pointOfInterest}": {
+      "get": {
+        "summary": "Get trails by point of interest",
+        "description": "Retrieve a list of trekking trails based on the specified point of interest. (text string)",
+        "parameters": [
+          {
+            "name": "pointOfInterest",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get all users",
+        "description": "Retrieve a list of all users.",
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "summary": "Create a new user",
+        "description": "Create a new user.",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "summary": "Get a user by ID",
+        "description": "Retrieve information about a specific user.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "put": {
+        "summary": "Update a user",
+        "description": "Update information about a specific user.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "summary": "Delete a user",
+        "description": "Delete a specific user.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/{userId}/favorites": {
+      "get": {
+        "summary": "Get user favorites",
+        "description": "Retrieve a list of favorites for a specific user.",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/trails/{trailId}/comments": {
+      "get": {
+        "summary": "Get comments for a trail",
+        "description": "Retrieve a list of comments for a specific trail.",
+        "parameters": [
+          {
+            "name": "trailId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "post": {
+        "summary": "Create a comment for a trail",
+        "description": "Create a comment for a specific trail.",
+        "parameters": [
+          {
+            "name": "trailId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/trails/{trailId}/comments/{commentId}": {
+      "put": {
+        "summary": "Update a comment",
+        "description": "Update a comment for a specific trail.",
+        "parameters": [
+          {
+            "name": "trailId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "summary": "Delete a comment",
+        "description": "Delete a comment for a specific trail.",
+        "parameters": [
+          {
+            "name": "trailId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/trails/comments": {
+      "get": {
+        "summary": "Get all comments",
+        "description": "Retrieve a list of all comments.",
+        "parameters": [],
+        "responses": {}
+      }
+    }
+  }
+}
