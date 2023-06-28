@@ -26,6 +26,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //los cuerpos JSON que se envian. Otra opción es usar Body-Parser, de la misma forma.
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(cors());
 connectDB();
 
 
