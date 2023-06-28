@@ -2,10 +2,10 @@
   "swagger": "2.0",
   "info": {
     "title": "My RouteDiscover API",
-    "description": "API for getting, posting, updating and deleting trekking routes and descriptions about it.",
+    "description": "API for getting, posting, updating, and deleting trekking routes and descriptions about it.",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "routediscover.onrender.com",
   "basePath": "/",
   "schemes": [
     "https"
