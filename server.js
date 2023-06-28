@@ -14,6 +14,14 @@ const errorHandler = require("./helpers/errorHandler");
 // // swaggerAutogen
 const swaggerAutogen = require('swagger-autogen')();
 
+
+// Handlebars
+app.engine('.hbs', exphbs.engine);
+app.set('view engine', '.hbs');
+
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 //Las siguientes lineas son Middleware que sirven para analizar
 //los cuerpos JSON que se envian. Otra opción es usar Body-Parser, de la misma forma.
 app.use(express.json());
@@ -26,7 +34,7 @@ app.engine('hbs', exphbs.engine);
 app.set('view engine', 'hbs');
 
 
-const port = 3000;
+const port = process.env.port || 3000;
 
 app.use(errorHandler);
 app.use("/", require("./routes/index"))
