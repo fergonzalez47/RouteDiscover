@@ -2,7 +2,8 @@ const router = require("express").Router();
 const { CreateTrailValidation, deleteTrailValidation } = require("../helpers/validation.js");
 
 const { getTrails, postTrail, getTrailById, GTBDifficulty, GTBCountry, GTBPointOfInterest, updateTrail, deleteTrail } = require("../controllers/trekkingController")
-
+const { getComments, postComment, getCommentsByTrailId, updateComment, deleteComment } = require("../controllers/commentsController.js");
+const { getUsers, getUserById, GTBFavorites, updateUser, deleteUser } = require("../controllers/userController.js");
 
 
 const swaggerUi = require('swagger-ui-express');
@@ -35,10 +36,10 @@ router.delete("/users/:userId", (req, res) => { });
 
 
 //comments
-router.get("/trails/{trailId}/comments", (req, res) => { });
-router.post("/trails/{trailId}/comments", (req, res) => { });
-router.put("/trails/{trailId}/comments/{commentId", (req, res) => { });
+router.get("/trails/comments/:trailId", (req, res) => { });
+router.post("/trails/comments/:trailId", (req, res) => { });
+router.put("/trails/comments/:trailId/:commentId", (req, res) => { });
 router.get("/trails/comments", (req, res) => { });
-router.delete("/trails/{trailId}/comments/{commentId", (req, res) => { });
+router.delete("/trails/comments/:trailId/:commentId", (req, res) => { });
 
 module.exports = router;

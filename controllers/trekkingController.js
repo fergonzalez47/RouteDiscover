@@ -9,25 +9,25 @@ const getTrails = async (req, res) => {
 
     try {
         const trails = await TrekkingRoute.find().lean();
-        res.status(200).json({ trails });
+        const successMessage = req.flash('success');
+        // res.status(200).json({ trails });
+        res.render("trails", { trails: trails, successMessage });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "error getting the routes..." });
     }
 };
 
-
 const postTrail = async (req, res, next) => {
-
-    //------------------- Validation ------------------------- //
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    };
-    //------------------- Validation ------------------------- //
-    const { name, difficulty, distance, duration, country, description,
-        pointsOfInterest, createdAt } = req.body;
     try {
+        //------------------- Validation ------------------------- //
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        //------------------- Validation ------------------------- //
+
+        const { name, difficulty, distance, duration, country, description, pointsOfInterest, createdAt } = req.body;
 
         let data = {
             name: name,
@@ -44,17 +44,20 @@ const postTrail = async (req, res, next) => {
 
         await newTrail.save();
 
-        res.status(201).json({ id: newTrail._id });
+        req.flash('success', 'Your route was saved successfully!');
+        res.redirect('/trails');
         console.log("*** Trekking trail Saved ***");
+    
     } catch (error) {
         console.error(error.name, error.message);
         if (error.name === "ValidationError") {
             next(createError(422, error.message));
             return;
-        };
+        }
         next(error);
-    };
+    }
 };
+
 
 
 //This function will get a trail based on a given ID
@@ -73,7 +76,7 @@ const getTrailById = async (req, res, next) => {
             throw createError(400, "Trekking route not found.")
         }
 
-        res.status(200).json({ trail });
+        res.status(200).json(trail);
     } catch (error) {
         console.error(error);
         res.status(422).json({ error: error.message });
@@ -133,7 +136,7 @@ const updateTrail = async (req, res, next) => {
         const { name, difficulty, distance, duration, country, description,
             pointsOfInterest } = req.body;
         
-        let updatedData = {
+        const updatedData = {
             name: name,
             difficulty: difficulty,
             distance: distance,
@@ -143,7 +146,7 @@ const updateTrail = async (req, res, next) => {
             pointsOfInterest: pointsOfInterest
         };
 
-        const updatedTrail = TrekkingRoute.findByIdAndUpdate(trailId, updatedData, { new: true });
+        const updatedTrail = await TrekkingRoute.findByIdAndUpdate(trailId, updatedData, { new: true });
 
         if (!updatedTrail) { 
             throw createError(404, "The trekking route does not exist. ");

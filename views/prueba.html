@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>New Trekking route</h1>
+    
+    <form action="/trails" method="POST">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required placeholder="Example: Cascada de Macul">
+        </div>
+        <div>
+            <label for="difficulty">Difficulty:</label>
+            <select id="difficulty" name="difficulty">
+                <option value="" disabled selected>Select difficulty</option>
+                <option value="Easy">Fácil</option>
+                <option value="Moderate">Moderada</option>
+                <option value="Hard">Difícil</option>
+            </select>
+        
+        </div>
+        <div>
+            <label for="distance">Distance (en km):</label>
+            <input type="number" id="distance" name="distance" required placeholder="Example: 5">
+        </div>
+        <div>
+            <label for="duration">Duration (Hours)):</label>
+            <input type="number" id="duration" name="duration" required placeholder="1.5">
+        </div>
+        <div>
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" required placeholder="Canada">
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required placeholder="The Salto Angel Expedition is a challenging trekking route located in the Canaima National Park in Venezuela. It takes you on an adventurous journey to Angel Falls, the highest waterfall in the world. The trek includes hiking through 
+            dense rainforests, crossing rivers, and camping in the wilderness."></textarea>
+        </div>
+        <div>
+            <label for="pointsOfInterest">Puntos de Interés:</label>
+            <textarea id="pointsOfInterest" name="pointsOfInterest" required
+                placeholder="Angel Falls, Auyán-Tepui, etc"></textarea>
+        </div>
+        <div>
+            <button type="submit">Create</button>
+        </div>
+    </form>
+</body>
+</html>

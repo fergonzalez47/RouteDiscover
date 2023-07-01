@@ -1,0 +1,34 @@
+{{#if successMessage}}
+<div class="success-message">
+    <p>Your route was saved successfully!</p>
+</div>
+
+<script>
+    setTimeout(function () {
+            document.querySelector('.success-message').classList.add('hide');
+        }, 5000);
+</script>
+
+{{/if}}
+<h2>Trekking Routes</h2>
+{{#if trails}}
+<div class="routes-container">
+    <div class="route-parent new">
+        <a href="/newTrail">NEW TRAIL</a>
+    </div>
+    {{#each trails}}
+    <div class="route-parent">
+        <div>
+            <h4>{{this.name}}</h4>
+        </div>
+        <div>
+            <p>{{this.difficulty}}</p>
+            <p>{{this.distance}} Km</p>
+            <p>{{this.duration}} Hrs</p>
+            <p>{{this.country}}</p>
+        </div>
+
+    </div>
+    {{/each}}
+    {{/if}}
+</div>
