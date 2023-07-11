@@ -1,0 +1,24 @@
+<form action="/#" method="post">
+    <div>
+        <label for="userFirstname">First Name: </label>
+        <input id="userFirstname" name="userFirstname" type="text" maxlength="30" required>
+    </div>
+    <div>
+        <label for="userLastname">Last Name: </label>
+        <input id="userLastname" name="userLastname" maxlength="30" type="text" required >
+    </div>
+    <div>
+        <label for="userEmail">Email: </label>
+        <input id="userEmail" name="userEmail" type="email" placeholder="email123@gmail.com" required >
+    </div>
+    <div>
+        <label for="userPassword">Password: </label>
+        <span>The password must have at least <bold>8 characters</bold>: at least 1 uppercase character, 1 number and 1
+            special character.</span>
+        <input id="userPassword" name="userPassword" type="password"
+            pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="password" required>
+    </div>
+    <input type="submit" name="submit" id="regbtn" value="Register">
+    <input type="hidden" name="action" value="register">
+    <p> Do you have account? <br><a href="/login"> Login</a></p>
+</form>

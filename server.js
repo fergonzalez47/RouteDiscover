@@ -12,6 +12,12 @@ const flash = require('connect-flash');
 const MongoStore = require('connect-mongo');
 const errorHandler = require("./helpers/errorHandler");
 
+
+// Pasport 
+
+require('./passport.js')(passport);
+
+
 // // swaggerAutogen
 const swaggerAutogen = require('swagger-autogen')();
 
@@ -26,10 +32,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
     secret: 'keyboard cat',
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false,
+    //A mi me funcionó, por la version mas reciente hacerlo con el metodo Create,
+    //y no como la creación de objeto. Además, aqui se tiene que pasar una propiedad,
+    // la URL de DB. 
+    store: MongoStore.create({
+        mongoUrl: process.env.DB_URL,
+        mongooseConnection: mongoose.connection
+    })
 }));
 
+
+//passport middleware
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 //flash
 
@@ -43,12 +61,24 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 connectDB();
 
+//Para almacenar en una variable si el user inició sesión (con passport) o no
+// Arreglar para uso de ingreso con local en MONGDB
+app.use(function (req, res, next) {
+    res.locals.isAuthenticated = req.isAuthenticated();
+    next();
+});
+
+
+
+
 
 const port = process.env.port || 3000;
 
 app.use(errorHandler);
 app.use("/", require("./routes/index"));
 app.use("/", require('./routes//path.js'));
+app.use("/auth", require('./routes/auth.js'));
+
 
 
 app.listen(port);

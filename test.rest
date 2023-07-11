@@ -29,3 +29,9 @@
   "description": "The Quebrada de Macul is a beautiful hiking trail located near Santiago, Chile. It offers a moderate level of difficulty and takes approximately 4 hours to complete. The trail takes you through a picturesque canyon with stunning views of the surrounding mountains and a refreshing river that runs through it. It's a great opportunity to immerse yourself in nature and enjoy the tranquility of the area.",
   "pointsOfInterest": "Canyon views, Mountain scenery, River crossing"
 }
+
+
+{
+  "trekkingRoute": "649527cff98623f667156249",
+  "comment": "Muy bueno el lugar"
+}

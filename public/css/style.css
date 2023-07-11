@@ -1,4 +1,27 @@
-main {
+body {
+    font-size: clamp(14px, 2vw, 18px);
+    font-family: Arial, sans-serif;
+}
+
+.fernando {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+h1 {
+    font-size: clamp(24px, 6vw, 48px);
+}
+
+h2 {
+    font-size: clamp(20px, 5vw, 40px);
+}
+
+h3 {
+    font-size: clamp(18px, 4vw, 36px);
+}
+
+main,
+.login-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,6 +29,152 @@ main {
     background-color: rgb(234, 236, 238);
 }
 
+.login-container {
+    width: 60%;
+    margin-top: 50px;
+    text-align: center;
+}
+
+span {
+    margin-top: 0.7em;
+    margin-bottom: 0.7em;
+}
+
+.password {
+    font-size: clamp(12px, 2vw, 14px);
+
+    line-height: 16px;
+    font-weight: normal;
+    color: rgb(92, 108, 117);
+    text-align: center;
+}
+
+.login-container form {
+    margin: auto;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.main-page {
+    display: grid;
+    grid-template-areas: '';
+}
+
+.main-page {
+    display: grid;
+    gap: 0.5em;
+    grid-template-areas:
+        'section1'
+        'section2'
+        'section3';
+}
+
+.main-page section {
+    margin: 0.3em;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+
+.main-page section:nth-child(1) {
+    display: grid;
+    grid-area: section1;
+}
+
+.main-page section:nth-child(2) {
+    display: grid;
+    grid-area: section2;
+}
+
+.main-page section:nth-child(2) div {
+
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    margin: 5%;
+}
+
+/*2 botones*/
+
+.button-sign-in,
+.button-register {
+    min-height: 40px;
+    align-items: center;
+    appearance: none;
+    border: 0;
+    border-radius: 6px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow .15s, transform .15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow, transform;
+    font-size: 18px;
+    transition: box-shadow .15s, transform .15s, background-image .3s;
+}
+
+.button-sign-in {
+
+    background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+    box-shadow: rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px,
+        rgba(58, 65, 111, .5) 0 -3px 0 inset;
+}
+
+
+.button-sign-in:focus {
+    box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+}
+
+.button-sign-in:hover {
+    box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+.button-sign-in:active {
+    box-shadow: #3c4fe0 0 3px 7px inset;
+    transform: translateY(2px);
+}
+
+
+/*BUTTON 2*/
+
+.button-register {
+    background-image: radial-gradient(100% 100% at 100% 0, #5aff68 0, #1eaa23 100%);
+    box-shadow: rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px,
+        rgba(20, 57, 6, 0.5) 0 -3px 0 inset;
+}
+
+.button-register:focus {
+    box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, .4) 0 2px 4px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+}
+
+.button-register:hover {
+    box-shadow: rgba(45, 35, 66, .4) 0 4px 8px, rgba(45, 35, 66, .3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+.button-register:active {
+    box-shadow: #80ee7e 0 3px 7px inset;
+    transform: translateY(2px);
+}
+
+.main-page section:nth-child(3) {
+    display: grid;
+    grid-area: section3;
+}
 
 .routes-container {
 
@@ -46,3 +215,54 @@ select {
 .hide {
     display: none;
 }
+
+
+
+.custom-span {
+    position: relative;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    color: rgb(99, 96, 96);
+}
+
+.custom-span::before,
+.custom-span::after {
+    content: "";
+    flex: 1 1 10%;
+    width: 100%;
+    border-bottom: 1px solid rgb(147, 152, 151);
+    margin: 0px 10px;
+    transform: translateY(-50%);
+}
+
+.span-container::before {
+    margin-left: 0px;
+}
+
+.span-container::after {
+    margin-right: 0px;
+}
+
+@media screen and (min-width: 1200px) {
+
+    /* Estilos para pantallas grandes */
+    /* Por ejemplo: */
+    body {
+        font-size: 18px;
+    }
+}
+
+
+@media screen and (min-width: 768px) {
+
+    .main-page {
+        display: grid;
+        grid-template-areas:
+            'section1 section2'
+            'section3 section3';
+    }
+}
+
+
+@media screen and (max-width: 767px) {}

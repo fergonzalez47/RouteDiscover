@@ -9,6 +9,10 @@ const getComments = async (req, res) => {
 
     try {
         const comments = await Comment.find().lean();
+
+        if (comments.length === 0) {
+            return res.status(200).json({ message: "No comments in db." });
+        }
         res.status(200).json({ comments });
     } catch (error) {
         console.error(error);
@@ -16,37 +20,8 @@ const getComments = async (req, res) => {
     }
 };
 
-const postComment = async (req, res, next) => {
-    try {
-        //------------------- Validation ------------------------- //
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-        //------------------- Validation ------------------------- //
 
-        const { trekkingRoute, comment } = req.body;
-        const userId = req.user._id 
-        let data = {
-            user: userId,
-            trekkingRoute: trekkingRoute,
-            comment: comment
-        };
 
-        let newComment = new Comment(data);
-        await newComment.save();
-        res.status(201).json({ id: newComment._id });
-        console.log("*** Comment Saved ***");
-
-    } catch (error) {
-        console.error(error.name, error.message);
-        if (error.name === "ValidationError") {
-            next(createError(422, error.message));
-            return;
-        }
-        next(error);
-    }
-};
 
 
 
@@ -74,6 +49,41 @@ const getCommentsByTrailId = async (req, res, next) => {
         }
     }
 };
+
+
+
+const postComment = async (req, res, next) => {
+    try {
+        //------------------- Validation ------------------------- //
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        //------------------- Validation ------------------------- //
+
+        const { trekkingRoute, comment } = req.body;
+        const userId = req.user._id || 100;
+        let data = {
+            user: userId,
+            trekkingRoute: trekkingRoute,
+            comment: comment
+        };
+
+        let newComment = new Comment(data);
+        await newComment.save();
+        res.status(201).json({ id: newComment._id });
+        console.log("*** Comment Saved ***");
+
+    } catch (error) {
+        console.error(error.name, error.message);
+        if (error.name === "ValidationError") {
+            next(createError(422, error.message));
+            return;
+        }
+        next(error);
+    }
+};
+
 
 
 const updateComment = async (req, res, next) => {

@@ -1,0 +1,31 @@
+<h3>RouteDiscover</h3>
+
+<div class="section">
+    <p class="lead">Start exploring and connect with fellow trekking enthusiasts on RouteDiscover!</p>
+</div>
+
+<div class="section login">
+    <a href="/auth/google" class="btn red darken-1">Log In with Google</a>
+    <div class="span-container">
+        <span class="custom-span">Or with email and password</span>
+    </div>
+    <form action="/phpmotors/accounts/account.php" method="post">
+        <div>
+            <label for="loginEmail">Email: </label>
+
+            <input id="loginEmail" name="loginEmail" type="email" placeholder="email123@gmail.com" required>
+        </div>
+        <div>
+            <label for="loginPassword">Password: </label>
+            <span class="password"><i>The password must have at least 8 characters: at least 1 uppercase character, 1 number
+            and 1
+            special character.</i></span>
+            <input id="loginPassword" name="loginPassword" type="password" placeholder="password"
+                pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required>
+        </div>
+        <input type="submit" class="btn blue darken-1" name="submit" value="LOGIN">
+        <input type="hidden" name="action" value="LLogin">
+        <p>No account? <a href="/phpmotors/accounts/account.php?action=registration">Register</a></p>
+    </form>
+
+</div>

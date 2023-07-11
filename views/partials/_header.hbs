@@ -1,11 +1,24 @@
-<nav class="grey darken-3">
+<nav class="green darken-4">
     <div class="nav-wrapper container">
-        <a href="#!" class="brand-logo center">RouteDiscover</a>
-        <ul class="list" id="mobile-demo">
+        <a href="/" class="brand-logo center">RouteDiscover</a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger show-on-large">
+            <i class="material-icons">menu</i>
+        </a>
+        <ul class="sidenav" id="mobile-demo">
+            <li>
+                <a href="#" class="close-icon sidenav-close">
+                    <i class="material-icons">close</i>
+                </a>
+            </li>
+            <li><a href="/dashboard">Dashboard</a></li>
             <li><a href="/trails">Routes</a></li>
             <li><a href="/api-docs">Swagger</a></li>
             <li><a href="/newTrail">New Route</a></li>
-            {{!-- <li><a href="/auth/logout">Logout</a></li> --}}
+            {{#if isAuthenticated}}
+            <li><a href="/auth/logout">Logout</a></li>
+            {{else}}
+            <li><a href="/login">Login</a></li>
+            {{/if}}
         </ul>
     </div>
 </nav>
