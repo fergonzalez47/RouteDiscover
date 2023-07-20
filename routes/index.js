@@ -3,8 +3,8 @@ const { CreateTrailValidation, deleteTrailValidation, registerUserValidation } =
 
 const { getTrails, postTrail, getTrailById, getTrailsByUserID, GTBDifficulty, GTBCountry, GTBPointOfInterest, updateTrail, deleteTrail } = require("../controllers/trekkingController")
 const { getComments, postComment, getCommentsByTrailId, updateComment, deleteComment } = require("../controllers/commentsController.js");
-const { getUsers, getUserById, GTBFavorites, updateUser, deleteUser, registerUser, loginUser } = require("../controllers/userController.js");
-const { addFavorite, getFavorites } = require('../controllers/favoritesController.js');
+const { getUsers, getUserById, updateUser, deleteUser, registerUser, loginUser } = require("../controllers/userController.js");
+const { addFavorite, getFavorites, RemoveFavorite } = require('../controllers/favoritesController.js');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger-output.json');
@@ -78,5 +78,6 @@ router.delete("/trails/comments/:commentId", ensureAuth, deleteComment);
 
 router.post('/favorites', ensureAuth, addFavorite);
 router.get("/favorites", ensureAuth, getFavorites);
+router.delete("/favorites/:favoriteId", ensureAuth, RemoveFavorite);
 
 module.exports = router;

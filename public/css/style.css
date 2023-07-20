@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap');
 
 body {
-    font-size: clamp(16px, 2vw, 18px);
+    font-size: clamp(17px, 3vw, 22px);
     font-family: 'Dosis', sans-serif;
 }
 

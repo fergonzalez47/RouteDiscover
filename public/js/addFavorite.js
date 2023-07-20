@@ -16,6 +16,7 @@ favoriteBtn.addEventListener('click', () => {
     .then(data => {
         console.log('Trekking added to favorites:', data);
         // Puedes mostrar un mensaje de éxito o actualizar la vista de alguna manera
+        window.location.href = "/favorites";
     })
     .catch(error => {
         console.error('Error adding trekking to favorites:', error);

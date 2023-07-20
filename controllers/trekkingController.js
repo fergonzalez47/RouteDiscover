@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const TrekkingRoute = require("../models/TrekkingRoute");
 const createError = require("http-errors");
 const { validationResult } = require("express-validator");
+const { Favorite } = require('../models/Favorites.js');
 
 
 
@@ -100,9 +101,10 @@ const getTrailById = async (req, res, next, view) => {
         if (!trail) {
             throw createError(400, "Trekking route not found.")
         }
+        const isFavorite = await Favorite.exists({ user: req.user.id, trekkingRoute: trailId });
 
         // res.status(200).json(trail);
-        res.render(view, { trail: trail });
+        res.render(view, { trail: trail, isFavorite: isFavorite });
     } catch (error) {
         console.error(error);
         res.status(422).json({ error: error.message });

@@ -1,0 +1,19 @@
+
+<h2>Users</h2>
+{{#if users}}
+<div class="routes-container">
+    {{#each users}}
+    <div>
+        <div>
+            <h4>{{this.displayName}} {{this.lastName}}</h4>
+        </div>
+        <div>
+            <p><span class="shadow">Email: </span>{{#if this.email}}{{this.email}}{{else}}GOOGLE Auth{{/if}}</p>
+            <p><span class="shadow">Joined:</span> {{this.createdAt}}</p>
+            <p><span class="shadow">{{this.country}}</span></p>
+        </div>
+
+    </div>
+    {{/each}}
+    {{/if}}
+</div>

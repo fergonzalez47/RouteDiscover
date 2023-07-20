@@ -11,8 +11,11 @@
             <p><span>Duration:</span> {{trail.duration}} Hrs</p>
             <p><span>Country: {{trail.country}}</span></p>
             <p><span> Points Of Interest:</span> {{trail.pointsOfInterest}}</p>
-    <button class="material-symbols-outlined favorite-btn" data-trekking-id="{{trail._id}}">favorite</button>
-
+            {{#if isFavorite}}<span>Marked as Favorite </span>
+            {{else}}
+            <span>Mark as favorite:</span>
+    <button class="material-symbols-outlined favorite-btn " data-trekking-id="{{trail._id}}">favorite</button>
+{{/if}}
             
         </section>
         <br>

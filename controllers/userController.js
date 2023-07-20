@@ -11,10 +11,10 @@ const getUsers = async (req, res) => {
 
     try {
         const users = await User.find().lean();
-        res.status(200).json({ users });
+        res.status(200).render("routes/users", { users });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "error getting the Users..." });
+        res.status(500).render(error, { errorMessage: "error getting the Users..." });
     }
 };
 
@@ -94,22 +94,7 @@ const getUserById = async (req, res, next) => {
     }
 };
 
-// GTB = Get Trails By
 
-
-//Get trails by difficulty
-
-//NEED TO WORK HEREEEE
-const GTBFavorites = async (req, res, next) => {
-    const userId = req.params.userId;
-    try {
-        const favorites = await User.find({ favorites: userfavorites }).lean();
-        res.status(200).json({ trails });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "error getting the routes..." });
-    }
-};
 
 
 const updateUser = async (req, res, next) => {
@@ -234,4 +219,4 @@ const loginUser = (req, res, next) => {
 };
 
 
-module.exports = { getUsers, getUserById, GTBFavorites, updateUser, deleteUser, registerUser, loginUser };
+module.exports = { getUsers, getUserById, updateUser, deleteUser, registerUser, loginUser };

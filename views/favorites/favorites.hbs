@@ -1,5 +1,16 @@
-
 <h2>Favorites Routes</h2>
+
+{{#if message}}
+<div class="success-message">
+    <p>{{message}}</p>
+</div>
+
+<script>
+    setTimeout(function () {
+        document.querySelector('.success-message').classList.add('hide');
+    }, 5000);
+</script>
+{{/if}}
 {{#if favorites}}
 <div class="routes-container">
     {{#each favorites}}
@@ -10,8 +21,19 @@
         <div class="route-parent-detail">
             <a href="/trails/{{this._id}}">See more</a>
         </div>
+        <div>
+            <form class="action-delete" action="/favorites/{{this.favoriteId}}" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="material-symbols-outlined delete">
+                    delete
+                </button>
+            </form>
+        </div>
+
 
     </div>
     {{/each}}
+    {{else}}
+    <p>You do not have favorites routes yet</p>
     {{/if}}
 </div>
