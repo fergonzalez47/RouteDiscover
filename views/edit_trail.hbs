@@ -1,64 +1,48 @@
-{{#if errorMessage}}
-{{#if (isArray errorMessage)}}
-<div class="error-message">
-    {{#each errorMessage}}
-    <p>{{this.msg}}</p>
-    {{/each}}
-</div>
-{{else}}
-<div class="error-message">
-    <p>{{errorMessage}}</p>
-</div>
-{{/if}}
-<script>
-    setTimeout(function () {
-        document.querySelector('.error-message').classList.add('hide');
-    }, 6000);
-</script>
-{{/if}}
 
+<h1>Edit Trekking route</h1>
 
-
-<h1>New Trekking route</h1>
-
-<form class="form" action="/trails" method="POST">
+<form class="form" action="/trails/{{trail._id}}" method="POST">
+    <input type="hidden" name="_method" value="PUT">
     <div>
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required placeholder="Example: Cascada de Macul">
+        <input type="text" id="name" name="name" value="{{trail.name}}" required placeholder="Example: Cascada de Macul">
     </div>
     <div>
         <label for="difficulty">Difficulty:</label>
         <select id="difficulty" name="difficulty">
+            {{#select trail.difficulty}}
             <option value="" disabled selected>Select difficulty</option>
             <option value="Easy">Easy</option>
             <option value="Moderate">Moderate</option>
             <option value="Hard">Hard</option>
+            {{/select}}
         </select>
 
     </div>
     <div>
         <label for="distance">Distance (km):</label>
-        <input type="number" id="distance" name="distance" required placeholder="Example: 5">
+        <input type="number" id="distance" name="distance" value="{{trail.distance}}" required placeholder="Example: 5">
     </div>
     <div>
         <label for="duration">Duration (Hours):</label>
-        <input type="number" id="duration" name="duration" required placeholder="1.5">
+        <input type="number" id="duration" name="duration" value="{{trail.duration}}" required placeholder="1.5">
     </div>
     <div>
         <label for="country">Country:</label>
-        <input type="text" id="country" name="country" required placeholder="Canada">
+        <input type="text" id="country" name="country" value="{{trail.country}}" required placeholder="Canada">
     </div>
     <div>
         <label for="description">Description:</label>
         <textarea id="description" name="description" required placeholder="The Salto Angel Expedition is a challenging trekking route located in the Canaima National Park in Venezuela. It takes you on an adventurous journey to Angel Falls, the highest waterfall in the world. The trek includes hiking through 
-        dense rainforests, crossing rivers, and camping in the wilderness."></textarea>
+        dense rainforests, crossing rivers, and camping in the wilderness.">{{trail.description}}</textarea>
     </div>
     <div>
         <label for="pointsOfInterest">Puntos de Interés:</label>
         <textarea id="pointsOfInterest" name="pointsOfInterest" required
-            placeholder="Angel Falls, Auyán-Tepui, etc"></textarea>
+            placeholder="Angel Falls, Auyán-Tepui, etc">{{trail.pointsOfInterest}}</textarea>
     </div>
     <div>
-        <button type="submit">Create</button>
+        <button class="btn orange" type="submit">Save</button>
+        <a class="btn black" href="/dashboard">Cancel</a>
     </div>
 </form>

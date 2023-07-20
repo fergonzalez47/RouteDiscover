@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { ensureAuth } = require("../middleware/auth.js");
+const {  getTrailById } = require("../controllers/trekkingController")
 
 
 router.get("/", (req, res) => {
@@ -12,6 +13,11 @@ router.get("/newTrail", ensureAuth, (req, res) => {
 router.get("/registration", (req, res) => {
     res.render("registration");
 });
+
+router.get("/edit/:trailId", (req, res, next) => {
+    getTrailById(req, res, next, "edit_trail");
+});
+
 
 
 

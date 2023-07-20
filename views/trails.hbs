@@ -14,18 +14,22 @@
 {{#if trails}}
 <div class="routes-container">
     <div class="route-parent new">
-        <a href="/newTrail">NEW TRAIL</a>
+        <span class="material-symbols-outlined create">
+            add_circle
+        </span>
+        <p>NEW TRAIL</p>
     </div>
     {{#each trails}}
     <div class="route-parent">
-        <div>
+        <div class="route-title">
             <h4>{{this.name}}</h4>
         </div>
-        <div>
-            <p>{{this.difficulty}}</p>
-            <p>{{this.distance}} Km</p>
-            <p>{{this.duration}} Hrs</p>
-            <p>{{this.country}}</p>
+        <div class="route-parent-detail">
+            <p><span class="shadow">Difficulty: </span> {{this.difficulty}}</p>
+            <p><span class="shadow">Distance:</span> {{this.distance}} Km</p>
+            <p><span class="shadow">Duration:</span> {{this.duration}} Hrs</p>
+            <p><span class="shadow">{{this.country}}</span></p>
+            <a href="/trails/{{this._id}}">See more</a>
         </div>
 
     </div>

@@ -18,16 +18,40 @@ const getTrails = async (req, res) => {
     }
 };
 
+
+
+const getTrailsByUserID = async (req, res) => {
+
+    try {
+        const userId = req.user.id;
+
+        const trails = await TrekkingRoute.find({ createdBY: userId }).lean();
+
+        res.render("dashboard", {
+            trails: trails,
+            userName: req.user.firstName
+        });
+    } catch (error) {
+        console.error(error);
+        if (res.status(404)) {
+            res.render('error', { errorMessage: "Resource is not found...We are sorry" });
+        }
+        res.render('error', { errorMessage: "error getting the routes..." });
+
+    }
+};
+
 const postTrail = async (req, res, next) => {
     try {
         //------------------- Validation ------------------------- //
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.render("newTrail", { errorMessage: errors.array() });
         }
         //------------------- Validation ------------------------- //
 
         const { name, difficulty, distance, duration, country, description, pointsOfInterest, createdAt } = req.body;
+        const userId = req.user.id;
 
         let data = {
             name: name,
@@ -37,7 +61,8 @@ const postTrail = async (req, res, next) => {
             country: country,
             description: description,
             pointsOfInterest: pointsOfInterest,
-            createdAt: createdAt
+            createdAt: createdAt,
+            createdBY: userId
         };
 
         let newTrail = new TrekkingRoute(data);
@@ -47,7 +72,7 @@ const postTrail = async (req, res, next) => {
         req.flash('success', 'Your route was saved successfully!');
         res.redirect('/trails');
         console.log("*** Trekking trail Saved ***");
-    
+
     } catch (error) {
         console.error(error.name, error.message);
         if (error.name === "ValidationError") {
@@ -61,7 +86,7 @@ const postTrail = async (req, res, next) => {
 
 
 //This function will get a trail based on a given ID
-const getTrailById = async (req, res, next) => {
+const getTrailById = async (req, res, next, view) => {
     try {
         //getting the given parameter
         const trailId = req.params.trailId;
@@ -76,7 +101,8 @@ const getTrailById = async (req, res, next) => {
             throw createError(400, "Trekking route not found.")
         }
 
-        res.status(200).json(trail);
+        // res.status(200).json(trail);
+        res.render(view, { trail: trail });
     } catch (error) {
         console.error(error);
         res.status(422).json({ error: error.message });
@@ -125,54 +151,75 @@ const GTBPointOfInterest = async (req, res, next) => {
     }
 };
 
-const updateTrail = async (req, res, next) => { 
+
+const updateTrail = async (req, res, next) => {
     try {
-        //getting the given parameter
         const trailId = req.params.trailId;
+
+        if (!mongoose.Types.ObjectId.isValid(trailId)) {
+            return res.render("error", { errorMessage: "Invalid trekking route ID" });
+        }
+
+        const trail = await TrekkingRoute.findById(trailId).lean();
+
+        // Verificar si el usuario ha iniciado sesión y es el mismo que creó la ruta
+        if (req.user && trail && trail.createdBY.toString() === req.user._id.toString()) {
+            const { name, difficulty, distance, duration, country, description, pointsOfInterest } = req.body;
+
+            const updatedData = {
+                name: name,
+                difficulty: difficulty,
+                distance: distance,
+                duration: duration,
+                country: country,
+                description: description,
+                pointsOfInterest: pointsOfInterest
+            };
+
+            const updatedTrail = await TrekkingRoute.findByIdAndUpdate(trailId, updatedData, { new: true });
+
+            if (!updatedTrail) {
+                throw createError(404, "The trekking route does not exist.");
+            }
+
+            res.redirect('/dashboard');
+            console.log("Trekking route updated.");
+        } else {
+            // El usuario no es el propietario de la ruta, redirigir a otra página
+            res.redirect('/error');
+        }
+    } catch (error) {
+        console.error(error.name, error.message);
+        next(error);
+    }
+};
+
+
+
+
+const deleteTrail = async (req, res, next) => {
+    try {
+        const trailId = req.params.trailId;
+
         if (!mongoose.Types.ObjectId.isValid(trailId)) {
             console.log(trailId);
             return res.status(400).send({ message: "Invalid trekking route ID" });
         };
-        const { name, difficulty, distance, duration, country, description,
-            pointsOfInterest } = req.body;
-        
-        const updatedData = {
-            name: name,
-            difficulty: difficulty,
-            distance: distance,
-            duration: duration,
-            country: country,
-            description: description,
-            pointsOfInterest: pointsOfInterest
-        };
 
-        const updatedTrail = await TrekkingRoute.findByIdAndUpdate(trailId, updatedData, { new: true });
+        const trail = await TrekkingRoute.findById(trailId).lean();
 
-        if (!updatedTrail) { 
-            throw createError(404, "The trekking route does not exist. ");
-         };
-        res.status(201).json({ message: " Updated "});
-        console.log("Trekking route updated...");
+        // Verificar si el usuario ha iniciado sesión y es el mismo que creó la ruta
+        if (req.user && trail && trail.createdBY.toString() === req.user._id.toString()) {
 
-    } catch (error) {
-        console.error(error.name, error.message);
+            await TrekkingRoute.findByIdAndDelete(trailId);
 
-        next(error);
-    };
-};
-
-const deleteTrail = async (req, res, next) => {
-    try {
-        const trailID = req.params.trailId;
-
-        if (!mongoose.Types.ObjectId.isValid(trailID)) {
-            console.log(trailID);
-            return res.status(400).send({ message: "Invalid trekking route ID" });
-        };
-        
-        await TrekkingRoute.findByIdAndDelete(trailID);
-        res.status(200).json({ message: "Trail deleted successfully..." });
-        console.log("* Trekking trail deleted *");
+            const message = 'Trekking route deleted successfully!';
+            console.log("* Trekking trail deleted *");
+            res.redirect("/dashboard");
+        } else {
+            // El usuario no es el propietario de la ruta, redirigir a otra página
+            res.redirect('/error');
+        }
     } catch (error) {
         console.error(error.message);
         if (error instanceof mongoose.CastError) {
@@ -187,6 +234,7 @@ module.exports = {
     getTrails,
     postTrail,
     getTrailById,
+    getTrailsByUserID,
     GTBDifficulty,
     GTBCountry,
     GTBPointOfInterest,

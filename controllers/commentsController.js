@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const Comment = require("../models/Comment.js");
+const User = require("../models/User.js");
 const createError = require("http-errors");
 const { validationResult } = require("express-validator");
+
 
 
 
@@ -25,22 +27,36 @@ const getComments = async (req, res) => {
 
 
 
-//This function will get a trail and its comments based on a given trail ID
 const getCommentsByTrailId = async (req, res, next) => {
     try {
         const requestedTrailId = req.params.trailId;
-
         if (!mongoose.Types.ObjectId.isValid(requestedTrailId)) {
             throw createError(400, 'Invalid trail ID');
         }
-
+        
         const comments = await Comment.find({ trekkingRoute: requestedTrailId }).lean();
-
         if (comments.length === 0) {
-            throw createError(404, 'No comments found for the specified trail');
+            return console.log('No comments found for the specified trail');
         }
 
-        res.status(200).json({ comments });
+        // Obtengo los nombres de usuario correspondientes a los IDs de usuario en los comentarios
+        const userIds = comments.map(comment => comment.user);
+        const users = await User.find({ _id: { $in: userIds } }).lean();
+        const userMap = {};
+        users.forEach(user => {
+            userMap[user._id] = user.displayName + " " + user.lastName ;
+        });
+
+        // Reemplazar el ID de usuario por el nombre de usuario en cada comentario
+        const formattedComments = comments.map(comment => {
+            return {
+                user: userMap[comment.user],
+                comment: comment.comment,
+                createdAt: comment.createdAt
+            };
+        });
+        console.log("formattedComments", formattedComments);
+        res.status(200).json({ comments: formattedComments });
     } catch (error) {
         if (error.name === 'CastError') {
             next(createError(400, 'Invalid trail ID'));
@@ -61,18 +77,22 @@ const postComment = async (req, res, next) => {
         }
         //------------------- Validation ------------------------- //
 
-        const { trekkingRoute, comment } = req.body;
+        const { trekkingRouteID, comment } = req.body;
         const userId = req.user._id || 100;
+        if (!comment) {
+            return res.render(req.get('referer'));
+        };
+  
         let data = {
             user: userId,
-            trekkingRoute: trekkingRoute,
+            trekkingRoute: trekkingRouteID,
             comment: comment
         };
 
         let newComment = new Comment(data);
         await newComment.save();
-        res.status(201).json({ id: newComment._id });
         console.log("*** Comment Saved ***");
+
 
     } catch (error) {
         console.error(error.name, error.message);

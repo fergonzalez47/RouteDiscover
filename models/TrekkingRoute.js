@@ -33,6 +33,11 @@ const trekkingRouteSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    createdBY: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
     }
 });
 // Configurar el índice de texto en la propiedad 'pointsOfInterest'

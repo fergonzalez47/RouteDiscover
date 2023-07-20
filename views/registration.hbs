@@ -1,21 +1,44 @@
-<form action="/#" method="post">
+{{#if errorMessage}}
+{{#if (isArray errorMessage)}}
+<div class="error-message">
+{{#each errorMessage}}
+<p>{{this.msg}}</p>
+{{/each}}
+</div>
+{{else}}
+<div class="error-message">
+    <p>{{errorMessage}}</p>
+</div>
+{{/if}}
+<script>
+    setTimeout(function () {
+        document.querySelector('.error-message').classList.add('hide');
+    }, 6000);
+</script>
+{{/if}}
+
+
+
+
+<form class="form" action="/users" method="post">
     <div>
-        <label for="userFirstname">First Name: </label>
-        <input id="userFirstname" name="userFirstname" type="text" maxlength="30" required>
+        <label for="firstName">First Name: </label>
+        <input id="firstName" name="firstName" type="text" maxlength="30" required placeholder="Tony">
     </div>
     <div>
-        <label for="userLastname">Last Name: </label>
-        <input id="userLastname" name="userLastname" maxlength="30" type="text" required >
+        <label for="lastName">Last Name: </label>
+        <input id="lastName" name="lastName" maxlength="30" type="text" required placeholder="Stark">
     </div>
     <div>
-        <label for="userEmail">Email: </label>
-        <input id="userEmail" name="userEmail" type="email" placeholder="email123@gmail.com" required >
+        <label for="email">Email: </label>
+        <input id="email" name="email" type="email" placeholder="email123@gmail.com" required>
     </div>
     <div>
-        <label for="userPassword">Password: </label>
-        <span>The password must have at least <bold>8 characters</bold>: at least 1 uppercase character, 1 number and 1
+        <label for="password">password: </label>
+        <span class="password">The password must have at least <bold>8 characters</bold>: at least 1 uppercase
+            character, 1 number and 1
             special character.</span>
-        <input id="userPassword" name="userPassword" type="password"
+        <input id="password" name="password" type="password"
             pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" placeholder="password" required>
     </div>
     <input type="submit" name="submit" id="regbtn" value="Register">

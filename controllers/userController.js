@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const User = require("../models/User.js");
 const createError = require("http-errors");
 const { validationResult } = require("express-validator");
+const bcrypt = require("bcrypt");
+const passport = require('passport');
 
 
 
@@ -17,6 +19,55 @@ const getUsers = async (req, res) => {
 };
 
 
+
+
+const registerUser = async (req, res, next) => {
+    try {
+        //------------------- Validation ------------------------- //
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.render("registration", { errorMessage: errors.array() });
+        };
+        //------------------- Validation ------------------------- //
+
+        const { firstName, lastName, email, password } = req.body;
+    
+        if (!firstName || !lastName || !email || !password) {
+            return res.render('registration',{ errorMessage: 'All fields are required' });
+        }
+
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+
+            console.log('Email already registered');
+            return res.render('registration', { errorMessage: 'Email already registered. Try another email' });
+        }
+
+        // Genera el hash de la contraseña
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = new User({
+            displayName: firstName,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: hashedPassword
+        });
+
+        // Guarda el usuario en la base de datos
+        await newUser.save();
+        req.flash('successMessage', 'User registered successfully. Please log in.');
+        return res.redirect('/login');
+  
+    } catch (error) {
+        console.error(error.name, error.message);
+        if (error.name === "ValidationError") {
+            next(createError(422, error.message));
+            return;
+        }
+        return res.render('error', { errorMessage: error.message });
+    }
+};
 
 
 //This function will get a User based on his/her ID
@@ -113,4 +164,74 @@ const deleteUser = async (req, res, next) => {
     }
 };
 
-module.exports = {getUsers, getUserById, GTBFavorites, updateUser, deleteUser };
+
+
+// const loginUser = async (req, res, next) => {
+//     try {
+        
+//         const { loginEmail, loginPassword } = req.body;
+
+//         const registeredUser = await User.findOne({ email: loginEmail }).lean();
+//         console.log(registeredUser);
+
+//         if (!registeredUser) {
+//             console.log("Invalid email");
+//             return res.status(401).render("login", {
+//                 layout: "login",
+//                 errorMessage: "Invalid email",
+//             });
+//         }
+//         console.log(loginPassword, registeredUser.password, loginEmail);
+//         const passwordMatch = await bcrypt.compare(loginPassword, registeredUser.password);
+        
+
+//         if (!passwordMatch) {
+//             // Contraseña incorrecta
+//             console.log("Contraseña incorrecta");
+//             return res.status(401).render("login", {
+//                 layout: "login",
+//                 errorMessage: "invalid password",
+//             });
+//         };
+
+//         res.redirect("/dashboard");
+
+//     } catch (error) {
+//         console.error(error);
+
+//         res.status(500).render("error", {
+//             errorMessage: "Server Error, we really sorry!",
+//         });
+//     }
+// };
+
+
+
+const loginUser = (req, res, next) => {
+    passport.authenticate('local', (err, user, info) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).render("error", {
+                errorMessage: "Server Error, we're really sorry!",
+            });
+        }
+        if (!user) {
+            return res.status(401).render("login", {
+                layout: "login",
+                errorMessage: info.message,
+            });
+        }
+        req.login(user, (err) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).render("error", {
+                    errorMessage: "Server Error, we're really sorry!",
+                });
+            }
+            res.redirect("/dashboard");
+        });
+    })(req, res, next);
+};
+
+
+module.exports = { getUsers, getUserById, GTBFavorites, updateUser, deleteUser, registerUser, loginUser };

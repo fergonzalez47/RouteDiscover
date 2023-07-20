@@ -35,3 +35,32 @@
   "trekkingRoute": "649527cff98623f667156249",
   "comment": "Muy bueno el lugar"
 }
+
+
+
+
+//
+
+
+
+
+_id
+649527cff98623f667156249
+name
+"Alto Heumul: Laguna Fria"
+difficulty
+"Moderate"
+distance
+15
+duration
+5
+country
+"Chile"
+description
+"Trekking in Alto Heumul, Chile, offers an impressive experience in the…"
+pointsOfInterest
+"Glacier viewpoint, alpine lakes, Andean fauna"
+createdAt
+2023-06-23T05:04:15.045+00:00
+__v
+0

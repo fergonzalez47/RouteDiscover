@@ -1,0 +1,53 @@
+{{#if trail}}
+
+<div>
+
+    <div class="trekking-info">
+        <h2>{{trail.name}}</h2>
+        <p>{{trail.description}}</p>
+        <section class="details">
+            <p><span>Difficulty:</span> {{trail.difficulty}}</p>
+            <p><span>Distance:</span> {{trail.distance}} Km</p>
+            <p><span>Duration:</span> {{trail.duration}} Hrs</p>
+            <p><span>Country: {{trail.country}}</span></p>
+            <p><span> Points Of Interest:</span> {{trail.pointsOfInterest}}</p>
+    <button class="material-symbols-outlined favorite-btn" data-trekking-id="{{trail._id}}">favorite</button>
+
+            
+        </section>
+        <br>
+        <button class="btn blue" id="new-comment-btn">New Comment</button>
+
+
+        <div id="comment-popup" class="popup" style="display: none;">
+            <span id="close-popup" class="popup-close">X</span>
+            <form id="comment-form">
+                <br>
+                <label for="comment">Comment:</label>
+                <textarea id="comment" name="comment" required
+                    placeholder="Write your comment here..."></textarea><br><br>
+                <div class="error-comment error-message">Please write a comment before submitting.</div>
+                <br>
+                <div class="comment-btns">
+                    <button class="btn small" type="submit" id="publish-btn">Post</button>
+                    <input type="hidden" id="trekkingRouteID" name="trekkingRouteID" {{#if trail}}value="{{trail._id}}"
+                        {{/if}}>
+                    <br>
+                    <button class="btn darken-4 red" type="button" id="cancel-btn">Cancel</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="comments-container">
+    <section class="comments">
+    </section>
+</div>
+{{/if}}
+
+<script src="/js/newComment.js"></script>
+<script src="/js/addFavorite.js"></script>

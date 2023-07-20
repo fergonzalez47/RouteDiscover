@@ -1,0 +1,48 @@
+<h4>Welcome {{userName}}</h4>
+
+{{#if message}}
+{{#each message}}
+<p class="success-message">{{message}}</p>
+{{/each}}
+{{/if}}
+
+{{#if trails}}
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Difficulty</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each trails}}
+        <tr>
+            <th><a href="/trails/{{_id}}">{{this.name}}</a></th>
+            <th>{{formatDate this.createdAt 'MMMM Do YYYY, h:mm;ss a'}}</th>
+            <th><span class="dash-status">{{this.difficulty}}</span></th>
+            <th>
+                <a class="edit-a" href="/edit/{{this._id}}">
+                    <span class="material-symbols-outlined edit">
+                        edit
+                    </span>
+                </a>
+
+                <form class="action-delete" action="/trails/{{this._id}}" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button class="material-symbols-outlined delete">
+                        delete
+                    </button>
+                </form>
+
+
+            </th>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{else}}
+<p>You have not created any trekking route</p>
+{{/if}}

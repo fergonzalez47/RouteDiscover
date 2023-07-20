@@ -3,21 +3,40 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const { connectDB } = require('./db/dbconnection');
-
 const cors = require('cors');
 const exphbs = require("express-handlebars").create({ defaultLayout: 'main', extname: '.hbs' });
+const Handlebars = require('handlebars');
 const passport = require("passport");
 const session = require('express-session');
 const flash = require('connect-flash');
 const MongoStore = require('connect-mongo');
 const errorHandler = require("./helpers/errorHandler");
+const methodOverride = require("method-override");
 
 
 // Pasport 
 
 require('./passport.js')(passport);
 
+//Las siguientes lineas son Middleware que sirven para analizar
+//los cuerpos JSON que se envian. Otra opción es usar Body-Parser, de la misma forma.
+app.use(express.json());
 
+app.use(express.urlencoded({ extended: false }));
+app.use(cors());
+
+
+//Method Override
+//replace the POST with PUT
+app.use(methodOverride("_method"));
+app.use(methodOverride(function (req, res) {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+        // look in urlencoded POST bodies and delete it
+        let method = req.body._method
+        delete req.body._method
+        return method
+    }
+}))
 // // swaggerAutogen
 const swaggerAutogen = require('swagger-autogen')();
 
@@ -25,8 +44,13 @@ const swaggerAutogen = require('swagger-autogen')();
 app.engine('.hbs', exphbs.engine);
 app.set('view engine', '.hbs');
 app.use(express.static(path.join(__dirname, 'public')));
-
-
+// Register the isArray helper
+Handlebars.registerHelper('isArray', function (value) {
+    return Array.isArray(value);
+});
+const { formatDate, select } = require("./helpers/hbs")
+Handlebars.registerHelper("formatDate", formatDate);
+Handlebars.registerHelper("select", select);
 
 //Express session
 
@@ -53,12 +77,7 @@ app.use(passport.session());
 
 app.use(flash());
 
-//Las siguientes lineas son Middleware que sirven para analizar
-//los cuerpos JSON que se envian. Otra opción es usar Body-Parser, de la misma forma.
-app.use(express.json());
 
-app.use(express.urlencoded({ extended: false }));
-app.use(cors());
 connectDB();
 
 //Para almacenar en una variable si el user inició sesión (con passport) o no

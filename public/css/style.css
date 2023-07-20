@@ -1,7 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap');
+
 body {
-    font-size: clamp(14px, 2vw, 18px);
-    font-family: Arial, sans-serif;
+    font-size: clamp(16px, 2vw, 18px);
+    font-family: 'Dosis', sans-serif;
 }
+
+/* Estilos para la ventana emergente */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+.popup form textarea {
+    max-width: 100%;
+    max-height: 100px;
+}
+
+.popup-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
 
 .fernando {
     display: flex;
@@ -18,6 +46,11 @@ h2 {
 
 h3 {
     font-size: clamp(18px, 4vw, 36px);
+}
+
+h4 {
+    font-size: clamp(15px, 3vw, 28px);
+    font-family: 'Poppins', sans-serif;
 }
 
 main,
@@ -41,7 +74,7 @@ span {
 }
 
 .password {
-    font-size: clamp(12px, 2vw, 14px);
+    font-size: clamp(8px, 1.9vw, 10px);
 
     line-height: 16px;
     font-weight: normal;
@@ -49,9 +82,18 @@ span {
     text-align: center;
 }
 
-.login-container form {
+
+.form {
+    background-color: rgba(255, 255, 255, 0.655);
+    padding: 0.5em;
+}
+
+
+
+.login-container form,
+form {
     margin: auto;
-    width: 50%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -178,12 +220,10 @@ span {
 
 .routes-container {
 
-    max-width: 90%;
+    max-width: 100%;
     align-self: center;
     text-align: center;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: space-evenly;
     grid-auto-flow: row;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
@@ -191,16 +231,72 @@ span {
 }
 
 .new {
-    background-color: #93FF33;
+    align-items: center;
+    background-image: linear-gradient(144deg, #00DDEB, #5a42f3ac 50%, #00DDEB);
+    justify-content: center;
     cursor: pointer;
+    color: white;
 }
 
 .route-parent {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    margin: 0.4em;
+    margin: 0.8em;
 
+    /* position: relative; */
 
 }
+
+.route-parent-detail p {
+
+    margin-bottom: 0.1em;
+    margin-left: 0.3em;
+    padding: 0;
+}
+
+.route-parent-detail a {
+    align-items: center;
+    border-radius: 12px;
+    box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;
+    box-sizing: border-box;
+    color: #0b90b5;
+    cursor: pointer;
+    display: inline-flex;
+    flex: 1 1 auto;
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    justify-content: center;
+    line-height: 1;
+    margin: 0.7em;
+    outline: none;
+    padding: 1rem 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .2s, -webkit-box-shadow .2s;
+    white-space: nowrap;
+    border: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.route-parent-detail a:focus,
+.route-parent-detail a:hover,
+.route-parent-detail a:active {
+    box-shadow: #0f057b 0 0 0 3px,
+        transparent 0 0 0 0;
+    color: #0f057b;
+}
+
+.route-title {
+    color: #da4015;
+    text-shadow: 3px 4px 7px rgba(81, 67, 21, 0.8);
+}
+
+.shadow {
+    color: #1e1288;
+    text-shadow: 1px 2px 15px rgba(16, 15, 38, 0.8);
+}
+
 
 select {
     display: block;
@@ -211,6 +307,49 @@ select {
     color: white;
     padding: 10px;
 }
+
+.error-message {
+    background-color: rgb(112, 9, 9);
+    color: white;
+    padding: 10px;
+}
+
+.error-comment {
+    display: none
+}
+
+.comments-container {
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
+    width: 100%;
+}
+
+.comment {
+    margin: 0.6em;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+
+}
+
+.comment-username {
+    color: rgb(8, 8, 106);
+
+}
+
+.comment-date {
+    color: rgb(83, 81, 81);
+    font-style: italic;
+    font-weight: bold;
+    font-size: clamp(10px, 1.3vw, 12px);
+
+
+}
+
+.comment-text {
+    font-style: italic;
+
+}
+
 
 .hide {
     display: none;
@@ -244,13 +383,137 @@ select {
     margin-right: 0px;
 }
 
+.trekking-info span {
+    color: #0f057b;
+}
+
+.trekking-info {
+    padding: 1.3em;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.comment-btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly
+}
+
+
+/*ICONS*/
+
+.favorite-btn {
+    font-size: 5em;
+    margin-bottom: 0;
+    color: #b10b0b;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s all;
+}
+
+.create {
+    font-size: 5em;
+    margin-bottom: 0;
+    color: #96f24f;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s all;
+}
+
+.create {
+    height: 1em;
+    width: 1em;
+}
+
+.create:focus,
+.create:hover {
+    margin-bottom: 0;
+    /* Tamaño del icono */
+    color: #f3ffe2;
+
+}
+
+/*material-symbols-outlined*/
+.create:active {
+    box-shadow: #ffffff 0 3px 7px inset;
+}
+
+.new:focus,
+.new:hover,
+.new:active {
+    color: #ffffff;
+    background-image: linear-gradient(144deg, #08b3c0, #4e38deac 50%, #09b5c1);
+
+}
+
+
+
+.edit,
+.delete {
+    font-style: initial;
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 48
+}
+
+.edit {
+    color: #ffbb00;
+}
+
+.edit:focus,
+.edit:hover {
+
+    color: initial;
+
+}
+
+/*material-symbols-outlined*/
+.edit:active {
+    box-shadow: #4263c5 0 3px 7px inset;
+}
+
+
+.delete {
+    color: #ff0000;
+    transition: 0.3s all;
+}
+
+.delete:focus,
+.delete:hover {
+
+    color: initial;
+
+}
+
+/*material-symbols-outlined*/
+.delete:active {
+    box-shadow: #5b0404 0 3px 7px inset;
+}
+
+
+
+
+
+
+.edit-a,
+.action-delete {
+    display: inline-block;
+    vertical-align: middle;
+
+}
+
 @media screen and (min-width: 1200px) {
 
     /* Estilos para pantallas grandes */
     /* Por ejemplo: */
     body {
         font-size: 18px;
+
     }
+
 }
 
 
@@ -262,7 +525,28 @@ select {
             'section1 section2'
             'section3 section3';
     }
+
+    .routes-container {
+        max-width: 90%;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    form {
+        width: 40%;
+    }
+
+    #comment-form {
+        width: 100%;
+    }
+
+    .login-container {
+        max-width: 60%;
+
+    }
+
+    .card {
+
+        text-align: center;
+        max-width: 60%;
+    }
 }
-
-
-@media screen and (max-width: 767px) {}

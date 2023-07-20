@@ -1,3 +1,27 @@
+
+{{#if successMessage}}
+<div class="success-message">
+    <p>{{successMessage}}</p>
+</div>
+{{/if}}
+
+<script>
+    setTimeout(function () {
+        document.querySelector('.success-message').classList.add('hide');
+    }, 5000);
+</script>
+
+{{#if errorMessage}}
+<div class="error-message">
+    <p>{{errorMessage}}</p>
+</div>
+{{/if}}
+<script>
+    setTimeout(function () {
+        document.querySelector('.error-message').classList.add('hide');
+    }, 5000);
+</script>
+
 <h3>RouteDiscover</h3>
 
 <div class="section">
@@ -9,23 +33,23 @@
     <div class="span-container">
         <span class="custom-span">Or with email and password</span>
     </div>
-    <form action="/phpmotors/accounts/account.php" method="post">
+    <form class="form" action="/login/users" method="post">
         <div>
-            <label for="loginEmail">Email: </label>
+            <label for="email">Email: </label>
 
-            <input id="loginEmail" name="loginEmail" type="email" placeholder="email123@gmail.com" required>
+            <input id="email" name="email" type="email" placeholder="email123@gmail.com" required>
         </div>
         <div>
-            <label for="loginPassword">Password: </label>
+            <label for="password">Password: </label>
             <span class="password"><i>The password must have at least 8 characters: at least 1 uppercase character, 1 number
             and 1
             special character.</i></span>
-            <input id="loginPassword" name="loginPassword" type="password" placeholder="password"
-                pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required>
+            <input id="password" name="password" type="password" placeholder="password"
+ required>
         </div>
         <input type="submit" class="btn blue darken-1" name="submit" value="LOGIN">
-        <input type="hidden" name="action" value="LLogin">
-        <p>No account? <a href="/phpmotors/accounts/account.php?action=registration">Register</a></p>
+
+        <p>No account? <a href="/registration">Register</a></p>
     </form>
 
 </div>

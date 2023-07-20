@@ -20,3 +20,10 @@ document.addEventListener('DOMContentLoaded', function () {
         sideNav.classList.remove('sidenav-open');
     });
 });
+
+if (document.querySelector(".new")) {
+    const newButton = document.querySelector(".new");
+    newButton.addEventListener("click", () => {
+        window.location.href = '/newTrail';
+    })
+};
